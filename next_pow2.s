@@ -7,11 +7,16 @@ next_pow2:
 .LFB23:
 	.cfi_startproc
 	endbr64
-	movabsq	$-9223372036854775808, %rax
-	bsrl	%edi, %ecx
-	xorl	$31, %ecx
-	subl	$1, %ecx
-	shrq	%cl, %rax
+	movl	$1, %eax
+	testq	%rdi, %rdi
+	je	.L1
+	bsrl	%edi, %edi
+	movl	$64, %ecx
+	xorl	$31, %edi
+	subl	%edi, %ecx
+	sall	%cl, %eax
+	cltq
+.L1:
 	ret
 	.cfi_endproc
 .LFE23:
